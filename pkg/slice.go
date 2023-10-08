@@ -5,18 +5,18 @@ type Number interface {
 }
 
 // Delete delete slice
-func Delete[T Number](stone []T, idx ...T) []T {
-	var result []T
+func Delete[T Number](s []T, idx ...T) []T {
+	result := make([]T, len(s))
 	for _, val := range idx {
-		result = append(stone[:val-1], stone[val:]...)
+		result = append(s[:val-1], s[val:]...)
 	}
-	return ShrinkSlice[T](result[:len(stone)-len(idx)])
+	return ShrinkSlice[T](result[:len(s)-len(idx)])
 }
 
 // ShrinkSlice 缩容机制
-func ShrinkSlice[T Number](slice []T) []T {
-	length := len(slice)
-	capacity := cap(slice)
+func ShrinkSlice[T Number](s []T) []T {
+	length := len(s)
+	capacity := cap(s)
 
 	if length <= capacity/2 && capacity > 2 {
 		newCapacity := capacity / 2
@@ -26,10 +26,10 @@ func ShrinkSlice[T Number](slice []T) []T {
 			newCapacity = 2 * length
 		}
 		newSlice := make([]T, length, newCapacity)
-		copy(newSlice, slice)
+		copy(newSlice, s)
 
 		return newSlice
 	}
 
-	return slice
+	return s
 }
