@@ -1,0 +1,15 @@
+services:
+  Mysql8:
+    image: mysql:8.0.34
+    restart: always
+#    command: --default-authentication-plugin=mysql_native_password    // mysql_native_password 字段已被弃用 改用 caching_sha2_password
+    command: --default-authentication-plugin=caching_sha2_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./script/mysql/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: webook
+      MYSQL_USER: dulei
+      MYSQL_PASSWORD: 164956Dl
